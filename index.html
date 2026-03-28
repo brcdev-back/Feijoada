@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feijoada da Casa</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="view-store" class="view active">
+  <nav>
+    <div class="nav-logo">Feijoada <span>da Casa</span></div>
+    <div class="nav-actions">
+      <button class="cart-btn" onclick="openCart()">
+        Carrinho <span id="cart-count">0</span>
+      </button>
+      <a class="adm-link" onclick="showAdmLogin()">⚙ ADM</a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-badge">Feito na hora · Quentinho</div>
+    <h1>A melhor<br><em>Feijoada</em><br>da cidade</h1>
+    <p>Receita da vovó, ingredientes selecionados e muito amor em cada porção. Entrega ou retirada no local.</p>
+    <div class="hero-scroll">▼ &nbsp; VER CARDÁPIO &nbsp; ▼</div>
+  </div>
+
+  <section class="section">
+    <h2 class="section-title">Cardápio</h2>
+    <p class="section-sub">Escolha sua porção e adicione ao carrinho</p>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card-img-placeholder"></div>
+        <div class="card-body">
+          <div class="card-title">Feijoada Individual</div>
+          <p class="card-desc">Porção caprichada perfeita pra você, com todos os acompanhamentos tradicionais.</p>
+          <ul class="card-includes">
+            <li>Feijão preto temperado</li>
+            <li>Arroz branco</li>
+            <li>Couve refogada</li>
+            <li>Farofa especial</li>
+            <li>Laranja fatiada</li>
+          </ul>
+          <div class="card-footer">
+            <div class="card-price">R$18<small>1 pessoa</small></div>
+            <button class="add-btn" onclick="addToCart('individual')">+ Adicionar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card Dupla -->
+      <div class="card">
+        <div class="badge-popular">Popular</div>
+        <div class="card-img-placeholder" style="background:linear-gradient(135deg,#3b1a0a,#6b3218)">🍲</div>
+        <div class="card-body">
+          <div class="card-title">Feijoada para Dois</div>
+          <p class="card-desc">Porção generosa pensada pra curtir junto, ideal para o almoço em família ou com amigos.</p>
+          <ul class="card-includes">
+            <li>Feijão preto temperado (dobro)</li>
+            <li>Arroz branco</li>
+            <li>Couve refogada</li>
+            <li>Farofa especial</li>
+            <li>Laranja fatiada + molho de pimenta</li>
+          </ul>
+          <div class="card-footer">
+            <div class="card-price">R$30<small>2 pessoas</small></div>
+            <button class="add-btn" onclick="addToCart('dupla')">+ Adicionar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section" style="padding-top:0">
+    <div class="divider">Informações</div>
+    <p class="info-text">
+      Vendas de seg a dom · 11h às 15h<br>
+      Retirada no local ou entrega por delivery<br>
+      Dúvidas? Fale pelo WhatsApp
+    </p>
+  </div>
+
+  <footer>
+    <p>© 2025 <strong>Feijoada da Casa</strong> · Feito com e muito amor</p>
+  </footer>
+</div>
+
+<div id="view-adm-login" class="view">
+  <div class="adm-login-wrap">
+    <div class="adm-login-box">
+      <div class="adm-login-logo">Área ADM</div>
+      <div class="adm-login-sub">Feijoada da Casa</div>
+      <div class="login-err" id="login-err">Usuário ou senha incorretos.</div>
+      <div class="form-group">
+        <label>Usuário</label>
+        <input type="text" id="adm-user" placeholder="admin" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label>Senha</label>
+        <input type="password" id="adm-pass" placeholder="••••••" onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+      <button class="login-btn" onclick="doLogin()">Entrar</button>
+      <div class="login-back" onclick="showStore()">← Voltar à loja</div>
+    </div>
+  </div>
+</div>
+
+<div id="view-adm" class="view">
+  <div class="adm-panel">
+    <nav class="adm-nav">
+      <div class="adm-nav-title">Painel ADM — Feijoada da Casa</div>
+      <button class="adm-logout" onclick="admLogout()">Sair</button>
+    </nav>
+    <div class="adm-content">
+
+      <div class="adm-stats">
+        <div class="stat-card">
+          <div class="stat-label">Total de Pedidos</div>
+          <div class="stat-value" id="stat-total">0</div>
+        </div>
+        <div class="stat-card" style="border-color:#f59e0b">
+          <div class="stat-label">Pendentes</div>
+          <div class="stat-value" id="stat-pending">0</div>
+        </div>
+        <div class="stat-card" style="border-color:#3b82f6">
+          <div class="stat-label">Em Preparo</div>
+          <div class="stat-value" id="stat-preparing">0</div>
+        </div>
+        <div class="stat-card" style="border-color:#22c55e">
+          <div class="stat-label">Faturamento</div>
+          <div class="stat-value green" id="stat-revenue">R$0</div>
+        </div>
+      </div>
+
+      <div class="adm-table-wrap">
+        <div class="adm-table-header">
+          <h3>Pedidos</h3>
+          <div class="filter-btns">
+            <button class="filter-btn active" onclick="filterOrders('all',this)">Todos</button>
+            <button class="filter-btn" onclick="filterOrders('pending',this)">Pendentes</button>
+            <button class="filter-btn" onclick="filterOrders('preparing',this)">Em Preparo</button>
+            <button class="filter-btn" onclick="filterOrders('done',this)">Prontos</button>
+          </div>
+        </div>
+        <div id="adm-table-container">
+          <div class="no-orders">
+            <div class="empty-table-icon"></div>
+            <p>Nenhum pedido ainda.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <h3>🛒 Seu Pedido</h3>
+    <button class="close-btn" onclick="closeCart()">×</button>
+  </div>
+  <div class="drawer-body" id="drawer-body">
+    <div class="empty-cart">
+      <div></div>
+      Seu carrinho está vazio.<br>Adicione uma porção!
+    </div>
+  </div>
+  <div class="drawer-footer">
+    <div class="total-row">
+      <span class="total-label">Total</span>
+      <span class="total-value" id="drawer-total">R$0,00</span>
+    </div>
+    <button class="checkout-btn" onclick="openCheckout()">Finalizar Pedido →</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Finalizar Pedido</h3>
+      <button class="close-btn" onclick="closeCheckout()">×</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
